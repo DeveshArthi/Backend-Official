@@ -8,13 +8,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-
-
 const app = express();
 const PORT = Number(process.env.PORT || 5000);
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  process.env.CLIENT_ORIGIN,
+].filter(Boolean);
+
+// Use only ONE CORS middleware, before the routes.
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
+  origin: allowedOrigins,
 }));
 
 app.use(express.json({ limit: '20kb' }));
@@ -26,13 +31,6 @@ const services = [
   'maintenance',
   'other',
 ];
-
-app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:5174',
-}));
-
-app.use(express.json({ limit: '20kb' }));
-
 const contactSchema = new mongoose.Schema(
   {
     name: {
