@@ -15,6 +15,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   process.env.CLIENT_ORIGIN,
+  'https://dan-consultancy-service.netlify.app',
 ].filter(Boolean);
 
 // Use only ONE CORS middleware, before the routes.
